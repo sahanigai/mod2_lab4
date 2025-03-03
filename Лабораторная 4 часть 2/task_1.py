@@ -1,85 +1,41 @@
-from typing import Any
+class Book:
+    """ Базовый класс книги. """
+    """Базовый класс книги."""
 
-class ТранспортноеСредство:
-    """
-    Базовый класс для всех транспортных средств.
-    """
-    def __init__(self, марка: str, модель: str, год_выпуска: int, пробег: float) -> None:
-        self.марка = марка
-        self.модель = модель
-        self.год_выпуска = год_выпуска
-        self._пробег = пробег  # Непубличный атрибут для защиты данных о пробеге
-
-    def поехать(self, расстояние: float) -> None:
-        """
-        Увеличивает пробег транспортного средства.
-        """
-        self._пробег += расстояние
-
-    def остановиться(self) -> None:
-        """
-        Останавливает транспортное средство.
-        """
-        print(f"{self.марка} {self.модель} остановился.")
-
-    def __str__(self) -> str:
-        return f"{self.марка} {self.модель} ({self.год_выпуска})"
-
-    def __repr__(self) -> str:
-        return (f"ТранспортноеСредство(марка='{self.марка}', модель='{self.модель}', "
-                f"год_выпуска={self.год_выпуска}, пробег={self._пробег})")
+    def __init__(self, name: str, author: str):
+        self.name = name
+        self.author = author
+@@ -11,21 +12,23 @@ def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r})"
 
 
-class Автомобиль(ТранспортноеСредство):
-    """
-    Дочерний класс для автомобилей.
-    """
-    def __init__(self, марка: str, модель: str, год_выпуска: int, пробег: float,
-                 количество_дверей: int, тип_кузова: str) -> None:
-        super().__init__(марка, модель, год_выпуска, пробег)
-        self.количество_дверей = количество_дверей
-        self.тип_кузова = тип_кузова
+class PaperBook:
+class PaperBook(Book):
+    """Класс бумажной книги."""
 
-    def поехать(self, расстояние: float) -> None:
-        """
-        Переопределение метода для учета особенностей автомобиля.
-        Например, можно учитывать расход топлива или другие параметры.
-        """
-        print(f"Автомобиль {self.марка} едет.")
-        super().поехать(расстояние)
+    def __init__(self, name: str, author: str, pages: int):
+        self.name = name
+        self.author = author
+        super().__init__(name, author)  # Используем конструктор базового класса
+        self.pages = pages
 
-    def __str__(self) -> str:
-        return f"Автомобиль: {self.марка} {self.модель}, {self.тип_кузова}, {self.год_выпуска}"
-
-    def __repr__(self) -> str:
-        return (f"Автомобиль(марка='{self.марка}', модель='{self.модель}', "
-                f"год_выпуска={self.год_выпуска}, пробег={self._пробег}, "
-                f"количество_дверей={self.количество_дверей}, тип_кузова='{self.тип_кузова}')")
+    def __str__(self):
+        return f"Книга {self.name}. Автор {self.author}"
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, pages={self.pages})"
 
 
-class Мотоцикл(ТранспортноеСредство):
-    """
-    Дочерний класс для мотоциклов.
-    """
-    def __init__(self, марка: str, модель: str, год_выпуска: int, пробег: float,
-                 тип_мотоцикла: str, есть_коляска: bool) -> None:
-        super().__init__(марка, модель, год_выпуска, пробег)
-        self.тип_мотоцикла = тип_мотоцикла
-        self.есть_коляска = есть_коляска
+class AudioBook:
+class AudioBook(Book):
+    """Класс аудиокниги."""
 
-    def поехать(self, расстояние: float) -> None:
-        """
-        Переопределение метода для учета особенностей мотоцикла.
-        Например, поведение с коляской или без неё.
-        """
-        коляска = "с коляской" if self.есть_коляска else "без коляски"
-        print(f"Мотоцикл {self.марка} ({коляска}) едет.")
-        super().поехать(расстояние)
+    def __init__(self, name: str, author: str, duration: float):
+        self.name = name
+        self.author = author
+        super().__init__(name, author)  # Используем конструктор базового класса
+        self.duration = duration
 
-    def __str__(self) -> str:
-        return f"Мотоцикл: {self.марка} {self.модель}, {self.тип_мотоцикла}, {self.год_выпуска}"
-
-    def __repr__(self) -> str:
-        return (f"Мотоцикл(марка='{self.марка}', модель='{self.модель}', "
-                f"год_выпуска={self.год_выпуска}, пробег={self._пробег}, "
-                f"тип_мотоцикла='{self.тип_мотоцикла}', есть_коляска={self.есть_коляска})")
+    def __str__(self):
+        return f"Книга {self.name}. Автор {self.author}"
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, duration={self.duration})"
